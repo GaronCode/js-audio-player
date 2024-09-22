@@ -1,1 +1,155 @@
-/*# sourceMappingURL=style.css.map */
+.audio-player {
+  min-height: 100vh;
+  background-color: aquamarine;
+  background-image: url(/assets/img/dontstartnow.png);
+  background-size: cover;
+  background-position: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.audio-player__backdrop {
+  -webkit-backdrop-filter: blur(0.2rem);
+          backdrop-filter: blur(0.2rem);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.audio-player-layout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45rem;
+  height: 45rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: block;
+}
+.audio-player-layout::before {
+  content: "";
+  width: 45rem;
+  height: 45rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: block;
+  background-color: aqua;
+  border: 1rem solid bisque;
+  opacity: 0.7;
+  border-left-color: blue;
+  border-top-color: brown;
+  border-right-color: violet;
+  border-bottom-color: green;
+  box-shadow: -1rem -1rem 4rem 2rem rgba(165, 42, 42, 0.3), 1rem 1rem 4rem 2rem rgba(0, 128, 0, 0.3);
+  animation-name: rotating, border-color-change;
+  animation-play-state: paused, paused;
+  animation-duration: 3s, 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.audio-player--play .audio-player-layout::before {
+  animation-play-state: running, running;
+}
+.audio-player--stop .audio-player-layout::before {
+  animation-play-state: paused, running;
+}
+.audio-player-layout__content {
+  width: 44rem;
+  height: 44rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(76, 49, 99);
+  background-image: url("/assets/img/dontstartnow.png");
+  background-size: 100%;
+  overflow: hidden;
+}
+.audio-player-layout__content-container {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-180deg);
+  }
+  0% {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes border-color-change {
+  0% {
+    border-left-color: blue;
+    border-top-color: brown;
+    border-right-color: violet;
+    border-bottom-color: green;
+  }
+  25% {
+    border-left-color: green;
+    border-top-color: blue;
+    border-right-color: brown;
+    border-bottom-color: violet;
+  }
+  50% {
+    border-left-color: violet;
+    border-top-color: green;
+    border-right-color: blue;
+    border-bottom-color: brown;
+  }
+  75% {
+    border-left-color: brown;
+    border-top-color: violet;
+    border-right-color: green;
+    border-bottom-color: blue;
+  }
+  100% {
+    border-left-color: blue;
+    border-top-color: brown;
+    border-right-color: violet;
+    border-bottom-color: green;
+  }
+}
+@keyframes border-color-change {
+  0% {
+    border-left-color: blue;
+    border-top-color: brown;
+    border-right-color: violet;
+    border-bottom-color: green;
+  }
+  25% {
+    border-left-color: green;
+    border-top-color: blue;
+    border-right-color: brown;
+    border-bottom-color: violet;
+  }
+  50% {
+    border-left-color: violet;
+    border-top-color: green;
+    border-right-color: blue;
+    border-bottom-color: brown;
+  }
+  75% {
+    border-left-color: brown;
+    border-top-color: violet;
+    border-right-color: green;
+    border-bottom-color: blue;
+  }
+  100% {
+    border-left-color: blue;
+    border-top-color: brown;
+    border-right-color: violet;
+    border-bottom-color: green;
+  }
+}/*# sourceMappingURL=style.css.map */

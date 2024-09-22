@@ -4,21 +4,28 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Audio Player</title>
-		<link rel="stylesheet" href="/assets/styles/reset.css" />
-		<link rel="stylesheet" href="/assets/styles/style.css" />
+		<link rel="stylesheet" href="./assets/styles/reset.css" />
+		<link rel="stylesheet" href="./assets/styles/style.css" />
 	</head>
 	<body>
-		<div id="audio-player" class="audio-player audio-player--play">
+		<div id="audio-player" class="audio-player audio-player--pause">
+			<audio src="" id="audio" autoplay></audio>
 			<div class="audio-player__backdrop"></div>
 			<div class="audio-player-layout">
-				<div class="audio-player-layout__content">
+				<div class="audio-player-layout__content" id="imgBg2">
 					<div class="audio-player-layout__content-container">
 						<div class="audio-player-layout__top">
 							<div class="audio-player-title">
-								<h2 class="audio-player-title__artist">
+								<h2
+									id="artist"
+									class="audio-player-title__artist"
+								>
 									Dua Lipa
 								</h2>
-								<h3 class="audio-player-title__song">
+								<h3
+									id="songName"
+									class="audio-player-title__song"
+								>
 									Don't Start Now
 								</h3>
 							</div>
@@ -26,18 +33,60 @@
 						<div class="audio-player-layout__center">
 							<div class="audio-controls-layout">
 								<button
+									id="ctrlPrev"
 									class="audio-control audio-control--left"
 								></button>
-								<div class="progress-bar">
-									<div class="progress-bar__control"></div>
+								<div class="propgess-bar-container">
+									<div class="progress-time">
+										<div id="timeProgress" class="time">
+											00:00
+										</div>
+										<div class="volume-layout">
+											<button
+												id="volumeDown"
+												class="volume-layout__btn"
+											>
+												-
+											</button>
+											<div
+												class="progress-bar progress-bar--small"
+												id="progressVolume"
+											>
+												<div
+													class="progress-bar__control"
+													id="progressVolumeControl"
+												></div>
+											</div>
+											<button
+												id="volumeUp"
+												class="volume-layout__btn"
+											>
+												+
+											</button>
+										</div>
+										<div id="timeDuration" class="time">
+											00:00
+										</div>
+									</div>
+
+									<div class="progress-bar" id="progressBar">
+										<div
+											class="progress-bar__control"
+											id="progressBarControl"
+										></div>
+									</div>
 								</div>
 								<button
+									id="ctrlNext"
 									class="audio-control audio-control--right"
 								></button>
 							</div>
 						</div>
 						<div class="audio-player-layout__bottom">
-							<div id="audio-play-control" class="audio-play-control">
+							<div
+								id="audioPlayControl"
+								class="audio-play-control"
+							>
 								<button
 									id="audio-player-play"
 									class="audio-control-main audio-control-main--play"
@@ -52,6 +101,20 @@
 				</div>
 			</div>
 		</div>
-		<script src="/assets/script/script.js"></script>
+
+		<footer>
+			<a href="https://github.com/GaronCode?tab=repositories" target="_blank"
+				><img
+					src="./assets/svg/github-color-svgrepo-com.svg"
+					alt="GaronCode github link"
+			/></a>
+			<span>2024 GaronCode</span>
+			<a href="https://rs.school/courses/javascript-preschool-ru" target="_blank"
+				><img
+					src="./assets/svg/rss-logo.svg"
+					alt="GaronCode github link"
+			/></a>
+		</footer>
+		<script src="./assets/script/script.js"></script>
 	</body>
 </html>

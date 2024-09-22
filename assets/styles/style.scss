@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap");
+
 @mixin setCircle($size) {
 	width: $size;
 	height: $size;
@@ -16,7 +18,7 @@
 	}
 }
 @mixin paused() {
-	@include inBlock(".audio-player--stop") {
+	@include inBlock(".audio-player--pause") {
 		@content;
 	}
 }
@@ -33,10 +35,14 @@
 }
 
 .audio-player {
+	font-family: "Gowun Batang", serif;
+	font-weight: 400;
+	font-style: normal;
+
 	min-height: 100vh;
 	background-color: aquamarine;
 
-	background-image: url(/assets/img/dontstartnow.png);
+	background-image: url("../img/dontstartnow.png");
 	background-size: cover;
 	background-position: 50%;
 
@@ -57,8 +63,9 @@
 }
 .audio-player-layout {
 	$width: 45rem;
+	box-shadow: 0rem 0rem 0.8rem 0.1rem rgba(255, 255, 255, 0.8);
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -99,15 +106,29 @@
 		@include setCircle($width - 1rem);
 		@include absolute-center();
 		background-color: rgb(76, 49, 99);
-		background-image: url("/assets/img/dontstartnow.png");
-		background-size: 100%;
+		background-image: url("../assets/img/dontstartnow.png");
+		background-size: 101%;
+		background-position: center;
 		overflow: hidden;
+		transition: background-size 0.8s ease-in-out;
+
+		@include played() {
+			background-size: 108%;
+		}
 	}
 	&__content-container {
 		background-color: rgba(0, 0, 0, 0.4);
 		display: flex;
 		flex-direction: column;
 		height: 100%;
+		box-shadow: inset 0rem 0rem 0.8rem 0.1rem rgba(255, 255, 255, 0.8);
+		border-radius: 50%;
+
+		transition: background-color 0.3s ease-in-out;
+
+		@include paused() {
+			background-color: rgba(0, 0, 0, 0.6);
+		}
 	}
 
 	&__center {
@@ -151,7 +172,7 @@
 
 	filter: brightness(700%);
 	background-size: 100%;
-	transition: all 0.3s ease-in-out;
+	transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
 
 	//box-shadow: 0 0 0.6rem 0.1rem rgb(228, 228, 228);
 
@@ -165,10 +186,10 @@
 	}
 
 	&--left {
-		background-image: url("/assets/svg/backward.png");
+		background-image: url("../svg/backward.png");
 	}
 	&--right {
-		background-image: url("/assets/svg/forward.png");
+		background-image: url("../svg/forward.png");
 	}
 }
 
@@ -196,7 +217,7 @@
 
 	&--play {
 		&::before {
-			content: "▶";
+			content: "❚❚";
 
 			@include paused() {
 				opacity: 0;
@@ -207,13 +228,13 @@
 	}
 	&--pause {
 		&::before {
-			content: "❚❚";
+			content: "▶";
 			position: absolute;
 
 			@include played() {
 				z-index: -1;
 				opacity: 0;
-				transform: scale(2);
+				transform: scale(3);
 			}
 		}
 	}
@@ -225,20 +246,55 @@
 }
 
 .progress-bar {
+	min-width: 10rem;
 	width: 100%;
 	height: 1rem;
-	background-color: rgba(0, 255, 255, 0.64);
 	border-radius: 0.5rem;
 	cursor: pointer;
+
+	animation: bg-anima 5s ease infinite;
+	background-size: 300% 300%;
+	background-image: linear-gradient(
+		45deg,
+		blue,
+		rgba(238, 130, 238, 1),
+		rgba(255, 0, 0, 1)
+	);
+	box-shadow: 0 0 0.2rem 0.2rem rgba(228, 228, 228, 0.5);
 
 	&__control {
 		height: 100%;
 		width: 40%;
 		border-radius: 0.5rem;
-		background-color: rgba(11, 8, 8, 0.509);
+		transition: all 0.3s linear;
+
+		background-color: rgba(255, 255, 255, 0.7);
 	}
 }
+.volume-layout {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
 
+	&__btn {
+		width: 1.2rem;
+		height: 1.2rem;
+		display: flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		transition: transform 0.2s linear, background-color 0.3s linear;
+		border-radius: 50%;
+
+		&:hover {
+			transform: scale(1.3);
+			background-color: rgba(217, 208, 255, 0.272);
+		}
+		&:active {
+			transform: scale(2);
+		}
+	}
+}
 .audio-player-title {
 	color: whitesmoke;
 	text-align: center;
@@ -258,6 +314,63 @@
 		margin: 0 auto;
 		width: 37rem;
 		@include text-truncate();
+	}
+}
+
+.propgess-bar-container {
+	width: 100%;
+}
+.progress-time {
+	color: whitesmoke;
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+	font-size: 1.1rem;
+	padding-bottom: 0.6rem;
+	user-select: none;
+}
+
+.time {
+	width: 5rem;
+
+	&#timeDuration {
+		text-align: right;
+	}
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 6rem;
+	padding: 1rem;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+
+	span {
+		color: antiquewhite;
+		letter-spacing: 0.4rem;
+		text-shadow: 0 0 1rem rgb(0, 0, 0);
+	}
+
+	img {
+		border-radius: 50%;
+		height: 100%;
+		width: 4rem;
+		opacity: 0.4;
+		transition: opacity 0.3s ease-in-out;
+		animation-name: rotating;
+		animation-duration: 3s;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+		animation-play-state: paused;
+		&:hover {
+			animation-play-state: running;
+			opacity: 0.8;
+		}
 	}
 }
 
@@ -302,5 +415,22 @@
 		border-top-color: brown;
 		border-right-color: violet;
 		border-bottom-color: green;
+	}
+}
+@keyframes bg-anima {
+	0% {
+		background-position: 10% 0%;
+	}
+	50% {
+		background-position: 91% 100%;
+	}
+	100% {
+		background-position: 10% 0%;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	html {
+		font-size: 2vw;
 	}
 }

@@ -10,11 +10,26 @@
 		@content;
 	}
 }
+@mixin played() {
+	@include inBlock(".audio-player--play") {
+		@content;
+	}
+}
+@mixin paused() {
+	@include inBlock(".audio-player--stop") {
+		@content;
+	}
+}
 @mixin absolute-center() {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+}
+@mixin text-truncate() {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .audio-player {
@@ -67,16 +82,15 @@
 			1rem 1rem 4rem 2rem rgba(0, 128, 0, 0.3);
 
 		animation-name: rotating, border-color-change;
-		animation-play-state: paused, paused;
 		animation-duration: 3s, 5s;
 		animation-timing-function: linear;
 		animation-iteration-count: infinite;
 
-		@include inBlock(".audio-player--play") {
+		@include played() {
 			animation-play-state: running, running;
 		}
 
-		@include inBlock(".audio-player--stop") {
+		@include paused() {
 			animation-play-state: paused, running;
 		}
 	}
@@ -91,7 +105,159 @@
 	}
 	&__content-container {
 		background-color: rgba(0, 0, 0, 0.4);
+		display: flex;
+		flex-direction: column;
 		height: 100%;
+	}
+
+	&__center {
+		height: 2rem;
+		flex: 0 0 6rem;
+	}
+	&__top,
+	&__bottom {
+		height: 100%;
+		flex: 1 1 2rem;
+	}
+
+	&__top {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__bottom {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+	}
+}
+.audio-controls-layout {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	justify-content: space-around;
+
+	padding-left: 1rem;
+	padding-right: 1rem;
+
+	gap: 2rem;
+}
+
+.audio-control {
+	@include setCircle(5rem);
+	flex: 0 0 5rem;
+
+	filter: brightness(700%);
+	background-size: 100%;
+	transition: all 0.3s ease-in-out;
+
+	//box-shadow: 0 0 0.6rem 0.1rem rgb(228, 228, 228);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&:hover {
+		filter: brightness(600%);
+		transform: scale(1.1);
+	}
+
+	&--left {
+		background-image: url("/assets/svg/backward.png");
+	}
+	&--right {
+		background-image: url("/assets/svg/forward.png");
+	}
+}
+
+.audio-control-main {
+	color: white;
+	font-size: 6rem;
+	height: 6rem;
+	width: 6rem;
+	position: absolute;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	text-shadow: 0 0 0.6rem rgb(228, 228, 228);
+
+	&--play {
+		transform: scale(1.2);
+	}
+
+	&--play::before,
+	&--pause::before {
+		transition: all 0.5s ease-out;
+	}
+
+	&--play {
+		&::before {
+			content: "▶";
+
+			@include paused() {
+				opacity: 0;
+				z-index: -1;
+				transform: scale(3);
+			}
+		}
+	}
+	&--pause {
+		&::before {
+			content: "❚❚";
+			position: absolute;
+
+			@include played() {
+				z-index: -1;
+				opacity: 0;
+				transform: scale(2);
+			}
+		}
+	}
+}
+.audio-play-control {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.progress-bar {
+	width: 100%;
+	height: 1rem;
+	background-color: rgba(0, 255, 255, 0.64);
+	border-radius: 0.5rem;
+	cursor: pointer;
+
+	&__control {
+		height: 100%;
+		width: 40%;
+		border-radius: 0.5rem;
+		background-color: rgba(11, 8, 8, 0.509);
+	}
+}
+
+.audio-player-title {
+	color: whitesmoke;
+	text-align: center;
+	text-shadow: 0 0 1rem rgb(0, 0, 0);
+	width: 100%;
+
+	&__artist {
+		font-size: 4rem;
+		width: 30rem;
+		margin: 0 auto;
+		@include text-truncate();
+	}
+
+	&__song {
+		font-size: 2rem;
+
+		margin: 0 auto;
+		width: 37rem;
+		@include text-truncate();
 	}
 }
 
@@ -106,39 +272,6 @@
 		transform: rotate(-360deg);
 	}
 }
-@keyframes border-color-change {
-	0% {
-		border-left-color: blue;
-		border-top-color: brown;
-		border-right-color: violet;
-		border-bottom-color: green;
-	}
-	25% {
-		border-left-color: green;
-		border-top-color: blue;
-		border-right-color: brown;
-		border-bottom-color: violet;
-	}
-	50% {
-		border-left-color: violet;
-		border-top-color: green;
-		border-right-color: blue;
-		border-bottom-color: brown;
-	}
-	75% {
-		border-left-color: brown;
-		border-top-color: violet;
-		border-right-color: green;
-		border-bottom-color: blue;
-	}
-	100% {
-		border-left-color: blue;
-		border-top-color: brown;
-		border-right-color: violet;
-		border-bottom-color: green;
-	}
-}
-
 @keyframes border-color-change {
 	0% {
 		border-left-color: blue;

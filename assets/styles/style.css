@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .audio-player {
   min-height: 100vh;
   background-color: aquamarine;
@@ -47,7 +48,6 @@
   border-bottom-color: green;
   box-shadow: -1rem -1rem 4rem 2rem rgba(165, 42, 42, 0.3), 1rem 1rem 4rem 2rem rgba(0, 128, 0, 0.3);
   animation-name: rotating, border-color-change;
-  animation-play-state: paused, paused;
   animation-duration: 3s, 5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -75,7 +75,141 @@
 }
 .audio-player-layout__content-container {
   background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
   height: 100%;
+}
+.audio-player-layout__center {
+  height: 2rem;
+  flex: 0 0 6rem;
+}
+.audio-player-layout__top, .audio-player-layout__bottom {
+  height: 100%;
+  flex: 1 1 2rem;
+}
+.audio-player-layout__top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.audio-player-layout__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.audio-controls-layout {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  gap: 2rem;
+}
+
+.audio-control {
+  width: 5rem;
+  height: 5rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: block;
+  flex: 0 0 5rem;
+  filter: brightness(700%);
+  background-size: 100%;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.audio-control:hover {
+  filter: brightness(600%);
+  transform: scale(1.1);
+}
+.audio-control--left {
+  background-image: url("/assets/svg/backward.png");
+}
+.audio-control--right {
+  background-image: url("/assets/svg/forward.png");
+}
+
+.audio-control-main {
+  color: white;
+  font-size: 6rem;
+  height: 6rem;
+  width: 6rem;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 0.6rem rgb(228, 228, 228);
+}
+.audio-control-main--play {
+  transform: scale(1.2);
+}
+.audio-control-main--play::before, .audio-control-main--pause::before {
+  transition: all 0.5s ease-out;
+}
+.audio-control-main--play::before {
+  content: "▶";
+}
+.audio-player--stop .audio-control-main--play::before {
+  opacity: 0;
+  z-index: -1;
+  transform: scale(3);
+}
+.audio-control-main--pause::before {
+  content: "❚❚";
+  position: absolute;
+}
+.audio-player--play .audio-control-main--pause::before {
+  z-index: -1;
+  opacity: 0;
+  transform: scale(2);
+}
+
+.audio-play-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 1rem;
+  background-color: rgba(0, 255, 255, 0.64);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.progress-bar__control {
+  height: 100%;
+  width: 40%;
+  border-radius: 0.5rem;
+  background-color: rgba(11, 8, 8, 0.509);
+}
+
+.audio-player-title {
+  color: whitesmoke;
+  text-align: center;
+  text-shadow: 0 0 1rem rgb(0, 0, 0);
+  width: 100%;
+}
+.audio-player-title__artist {
+  font-size: 4rem;
+  width: 30rem;
+  margin: 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.audio-player-title__song {
+  font-size: 2rem;
+  margin: 0 auto;
+  width: 37rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @keyframes rotating {
@@ -87,38 +221,6 @@
   }
   0% {
     transform: rotate(-360deg);
-  }
-}
-@keyframes border-color-change {
-  0% {
-    border-left-color: blue;
-    border-top-color: brown;
-    border-right-color: violet;
-    border-bottom-color: green;
-  }
-  25% {
-    border-left-color: green;
-    border-top-color: blue;
-    border-right-color: brown;
-    border-bottom-color: violet;
-  }
-  50% {
-    border-left-color: violet;
-    border-top-color: green;
-    border-right-color: blue;
-    border-bottom-color: brown;
-  }
-  75% {
-    border-left-color: brown;
-    border-top-color: violet;
-    border-right-color: green;
-    border-bottom-color: blue;
-  }
-  100% {
-    border-left-color: blue;
-    border-top-color: brown;
-    border-right-color: violet;
-    border-bottom-color: green;
   }
 }
 @keyframes border-color-change {
